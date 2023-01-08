@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
                     map.put("Name", txt_name);
                     map.put("Number", txt_number);
 
-//                    FirebaseDatabase.getInstance().getReference().child("Ghanshyam").push().child("Name").setValue(txt_name, txt_number);
-                    FirebaseDatabase.getInstance().getReference().child("Ghanshyam Mishra").child("Multiple").up(map);
+                    FirebaseDatabase.getInstance().getReference().child("Ghanshyam").push().setValue(map);
+//                    FirebaseDatabase.getInstance().getReference().child("Ghanshyam Mishra").child("Multiple").up(map);
 //                    FirebaseDatabase.getInstance().getReference().child("Ghanshyam").push().child("Number").setValue(txt_number);
 
                 }
