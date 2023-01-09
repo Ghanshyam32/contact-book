@@ -64,8 +64,9 @@ public class MainActivity extends AppCompatActivity {
                 else{
 
                     HashMap<String, Object> map = new HashMap<>();
-                    map.put("Name", txt_name);
-                    map.put("Number", txt_number);
+                    map.put("name", txt_name);
+                    map.put("number", txt_number);
+                    Toast.makeText(MainActivity.this, "Contact Saved",Toast.LENGTH_SHORT).show();
 
                     FirebaseDatabase.getInstance().getReference().child("Ghanshyam").push().setValue(map);
 //                    FirebaseDatabase.getInstance().getReference().child("Ghanshyam Mishra").child("Multiple").up(map);
