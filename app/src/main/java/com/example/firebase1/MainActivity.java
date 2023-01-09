@@ -58,15 +58,14 @@ public class MainActivity extends AppCompatActivity {
                 String txt_name = name.getText().toString();
                 String txt_number = number.getText().toString();
 
-                if(TextUtils.isEmpty(txt_name) || TextUtils.isEmpty(txt_number)){
+                if (TextUtils.isEmpty(txt_name) || TextUtils.isEmpty(txt_number)) {
                     Toast.makeText(MainActivity.this, "No details Entered!", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else {
 
                     HashMap<String, Object> map = new HashMap<>();
                     map.put("name", txt_name);
                     map.put("number", txt_number);
-                    Toast.makeText(MainActivity.this, "Contact Saved",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Contact Saved", Toast.LENGTH_SHORT).show();
 
                     FirebaseDatabase.getInstance().getReference().child("Ghanshyam").push().setValue(map);
 //                    FirebaseDatabase.getInstance().getReference().child("Ghanshyam Mishra").child("Multiple").up(map);
@@ -75,8 +74,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-
 
 
 //        FirebaseDatabase.getInstance().getReference().child("Ghanshyam Mishra").child("Android").setValue("Moto G5s Plus");

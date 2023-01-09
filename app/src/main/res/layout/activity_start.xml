@@ -12,9 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:layout_marginBottom="75dp"
+        android:background="@color/black"
         android:text="Login"
         android:textColor="@color/white"
-        android:background="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/signUp"
         app:layout_constraintStart_toStartOf="@+id/signUp" />
 
@@ -23,9 +23,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="291dp"
+        android:background="@color/black"
         android:text="Sign Up"
         android:textColor="@color/white"
-        android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

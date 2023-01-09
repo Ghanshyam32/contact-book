@@ -33,7 +33,7 @@ public class ContactsList extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 list.clear();
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 //                    ModelClass modelClass =  snapshot.getValue(ModelClass.class);
 //                    assert modelClass != null;
 //                    String txt = modelClass.getNumber() + " : " + modelClass.getName();

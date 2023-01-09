@@ -24,6 +24,7 @@ public class Register extends AppCompatActivity {
     private EditText password;
 
     private FirebaseAuth firebaseAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -41,13 +42,11 @@ public class Register extends AppCompatActivity {
                 String txt_email = email.getText().toString();
                 String txt_password = password.getText().toString();
 
-                if(TextUtils.isEmpty(txt_email)||TextUtils.isEmpty(txt_password)){
-                    Toast.makeText(Register.this,"Empty credentials", Toast.LENGTH_SHORT).show();
-                }
-                else if(txt_password.length()<6){
+                if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)) {
+                    Toast.makeText(Register.this, "Empty credentials", Toast.LENGTH_SHORT).show();
+                } else if (txt_password.length() < 6) {
                     Toast.makeText(Register.this, "password should be larger than 6 characters", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     registerUser(txt_email, txt_password);
                 }
             }
@@ -57,20 +56,18 @@ public class Register extends AppCompatActivity {
                 firebaseAuth.createUserWithEmailAndPassword(txt_email, txt_password).addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful()){
-                        Toast.makeText(Register.this, "Register Successful", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Register.this, MainActivity.class));
-                        finish();
-                    }
-                    else{
-                        Toast.makeText(Register.this, "Registration failed", Toast.LENGTH_SHORT).show();
-                    }
+                        if (task.isSuccessful()) {
+                            Toast.makeText(Register.this, "Register Successful", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Register.this, MainActivity.class));
+                            finish();
+                        } else {
+                            Toast.makeText(Register.this, "Registration failed", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 
             }
         });
-
 
 
     }

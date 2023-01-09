@@ -73,14 +73,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginTop="52dp"
+        android:autofillHints="7011432140"
         android:ems="10"
         android:hint="Number"
         android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/name"
-        app:layout_constraintTop_toBottomOf="@+id/name"
-        android:autofillHints="7011432140" />
+        app:layout_constraintTop_toBottomOf="@+id/name" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
