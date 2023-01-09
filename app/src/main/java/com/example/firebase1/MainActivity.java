@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText name;
     private EditText number;
     private Button add;
+    private Button show;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         name = findViewById(R.id.name);
         number = findViewById(R.id.number);
         add = findViewById(R.id.add);
+        show = findViewById(R.id.show);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ContactsList.class));
+            }
+        });
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
