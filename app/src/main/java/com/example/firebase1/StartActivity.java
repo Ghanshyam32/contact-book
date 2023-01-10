@@ -18,7 +18,7 @@ public class StartActivity extends AppCompatActivity {
 
         Button register = findViewById(R.id.signUp);
         Button login = findViewById(R.id.login);
-
+        Button mobile = findViewById(R.id.mobile);
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,6 +31,13 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(StartActivity.this, Login.class));
+                finish();
+            }
+        });
+        mobile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(StartActivity.this, mobileSignIn.class));
                 finish();
             }
         });
