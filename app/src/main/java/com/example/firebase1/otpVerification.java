@@ -13,6 +13,13 @@ import android.widget.Toast;
 
 public class otpVerification extends AppCompatActivity {
 
+    private EditText col1;
+    private EditText col2;
+    private EditText col3;
+    private EditText col4;
+    private EditText col5;
+    private EditText col6;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,12 +27,12 @@ public class otpVerification extends AppCompatActivity {
 
         Button verify = findViewById(R.id.verifyBtn);
 
-        EditText col1 = findViewById(R.id.num1);
-        EditText col2 = findViewById(R.id.num2);
-        EditText col3 = findViewById(R.id.num3);
-        EditText col4 = findViewById(R.id.num4);
-        EditText col5 = findViewById(R.id.num5);
-        EditText col6 = findViewById(R.id.num6);
+        col1 = findViewById(R.id.num1);
+        col2 = findViewById(R.id.num2);
+        col3 = findViewById(R.id.num3);
+        col4 = findViewById(R.id.num4);
+        col5 = findViewById(R.id.num5);
+        col6 = findViewById(R.id.num6);
 
         TextView myNum = findViewById(R.id.myNumber);
 
@@ -48,97 +55,97 @@ public class otpVerification extends AppCompatActivity {
     }
 
 
-            private void moveNumber() {
-                col1.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    private void moveNumber() {
+        col1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                    }
+            }
 
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (!s.toString().trim().isEmpty()) {
-                            col2.requestFocus();
-                        }
-                    }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!s.toString().trim().isEmpty()) {
+                    col2.requestFocus();
+                }
+            }
 
-                    @Override
-                    public void afterTextChanged(Editable s) {
+            @Override
+            public void afterTextChanged(Editable s) {
 
-                    }
-                });
-                col2.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+        });
+        col2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                    }
+            }
 
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (!s.toString().trim().isEmpty()) {
-                            col3.requestFocus();
-                        }
-                    }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!s.toString().trim().isEmpty()) {
+                    col3.requestFocus();
+                }
+            }
 
-                    @Override
-                    public void afterTextChanged(Editable s) {
+            @Override
+            public void afterTextChanged(Editable s) {
 
-                    }
-                });
-                col3.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+        });
+        col3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                    }
+            }
 
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (!s.toString().trim().isEmpty()) {
-                            col4.requestFocus();
-                        }
-                    }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!s.toString().trim().isEmpty()) {
+                    col4.requestFocus();
+                }
+            }
 
-                    @Override
-                    public void afterTextChanged(Editable s) {
+            @Override
+            public void afterTextChanged(Editable s) {
 
-                    }
-                });
-                col4.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+        });
+        col4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                    }
+            }
 
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (!s.toString().trim().isEmpty()) {
-                            col5.requestFocus();
-                        }
-                    }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!s.toString().trim().isEmpty()) {
+                    col5.requestFocus();
+                }
+            }
 
-                    @Override
-                    public void afterTextChanged(Editable s) {
+            @Override
+            public void afterTextChanged(Editable s) {
 
-                    }
-                });
-                col5.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+        });
+        col5.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                    }
+            }
 
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (!s.toString().trim().isEmpty()) {
-                            col6.requestFocus();
-                        }
-                    }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!s.toString().trim().isEmpty()) {
+                    col6.requestFocus();
+                }
+            }
 
-                    @Override
-                    public void afterTextChanged(Editable s) {
+            @Override
+            public void afterTextChanged(Editable s) {
 
-                    }
-                });
+            }
+        });
 
     }
 }
