@@ -230,4 +230,11 @@ public class otpVerification extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(otpVerification.this, mobileSignIn.class);
+        startActivity(intent);
+    }
 }
