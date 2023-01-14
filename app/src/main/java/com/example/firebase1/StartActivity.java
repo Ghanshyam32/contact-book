@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class StartActivity extends AppCompatActivity {
 
 
@@ -41,5 +43,31 @@ public class StartActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        boolean userLoggedIn = FirebaseAuth.getInstance().getCurrentUser() != null;
+        if (userLoggedIn) {
+            startActivity(new Intent(StartActivity.this, MainActivity.class));
+        } else {
+            register.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(StartActivity.this, Login.class));
+                }
+            });
+
+            login.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(StartActivity.this, Register.class));
+                }
+            });
+
+            mobile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(StartActivity.this, mobileSignIn.class));
+                }
+            });
+        }
     }
 }
