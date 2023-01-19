@@ -6,9 +6,13 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.SearchEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -84,4 +88,4 @@ public class MainActivity extends AppCompatActivity {
 //
 //        FirebaseDatabase.getInstance().getReference().child("Ghanshyam Mishra").child("Multiple").updateChildren(map);
     }
-}
+    }

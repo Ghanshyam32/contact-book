@@ -1,8 +1,11 @@
 package com.example.firebase1;
 
-public class ModelClass {
-    private String name;
-    private String number;
+public class modelClass {
+    String name, number;
+
+    modelClass() {
+
+    }
 
     public String getName() {
         return name;
@@ -20,7 +23,7 @@ public class ModelClass {
         this.number = number;
     }
 
-    public ModelClass(String name, String number) {
+    public modelClass(String name, String number) {
         this.name = name;
         this.number = number;
     }
