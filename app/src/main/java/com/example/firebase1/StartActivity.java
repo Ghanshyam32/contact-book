@@ -51,14 +51,14 @@ public class StartActivity extends AppCompatActivity {
             register.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(StartActivity.this, Login.class));
+                    startActivity(new Intent(StartActivity.this, Register.class));
                 }
             });
 
             login.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(StartActivity.this, Register.class));
+                    startActivity(new Intent(StartActivity.this, Login.class));
                 }
             });
 
