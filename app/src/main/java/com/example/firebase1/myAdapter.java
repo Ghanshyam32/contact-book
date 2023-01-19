@@ -35,7 +35,74 @@ public class myAdapter extends FirebaseRecyclerAdapter<modelClass, myAdapter.myV
         holder.name.setText(model.getName());
         holder.number.setText(model.getNumber());
 
+        holder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final DialogPlus dialogPlus = DialogPlus.newDialog(holder.name.getContext())
+                        .setContentHolder(new ViewHolder(R.layout.dialogcontent)).setExpanded(true, 900)
+                        .create();
+//                dialogPlus.show();
 
+                View myView = dialogPlus.getHolderView();
+                EditText name = myView.findViewById(R.id.name);
+                EditText number = myView.findViewById(R.id.number);
+
+                Button update = myView.findViewById(R.id.update);
+
+                name.setText(model.getName());
+                number.setText(model.getNumber());
+
+                dialogPlus.show();
+
+                update.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("name", name.getText().toString());
+                        map.put("number", number.getText().toString());
+
+                        FirebaseDatabase.getInstance().getReference().child("Ghanshyam")
+                                .child(getRef(position).getKey()).updateChildren(map)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        dialogPlus.dismiss();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        dialogPlus.dismiss();
+                                    }
+                                });
+
+                    }
+                });
+            }
+        });
+
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(holder.name.getContext());
+                builder.setTitle("Delete Contact");
+                builder.setMessage("Are you sure?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        FirebaseDatabase.getInstance().getReference().child("Ghanshyam")
+                                .child(getRef(position).getKey()).removeValue();
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.show();
+            }
+        });
     }
 
     @NonNull
