@@ -24,7 +24,7 @@ public class Login extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
 
     //    @SuppressLint("MissingInflatedId")
-    @SuppressLint("MissingInflatedId")
+//    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
