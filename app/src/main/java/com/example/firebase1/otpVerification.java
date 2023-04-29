@@ -115,7 +115,7 @@ public class otpVerification extends AppCompatActivity {
                         otpVerification.this, new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                             @Override
                             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-
+                                    Toast.makeText(otpVerification.this, "Verification Successful",Toast.LENGTH_SHORT).show();
                             }
 
                             @Override

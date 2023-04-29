@@ -1,30 +1,40 @@
 package com.example.firebase1;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Login extends AppCompatActivity {
 
+    GoogleSignInOptions googleSignIn;
+    GoogleSignInClient googleSignInClient;
 
     private EditText email;
     private EditText password;
-    private Button login;
+    private LinearLayout login;
+    private ImageView mobile;
 
     private FirebaseAuth firebaseAuth;
 
-    //    @SuppressLint("MissingInflatedId")
-//    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +43,9 @@ public class Login extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         login = findViewById(R.id.btnLogin);
+        mobile = findViewById(R.id.mobileSignIn);
         firebaseAuth = FirebaseAuth.getInstance();
+        ImageView googleSignInBtn = findViewById(R.id.google);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +69,49 @@ public class Login extends AppCompatActivity {
 
             }
         });
+
+        mobile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), mobileSignIn.class);
+                startActivity(i);
+            }
+        });
+        googleSignInBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signIn();
+            }
+        });
+
+        googleSignIn = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        googleSignInClient = GoogleSignIn.getClient(this, googleSignIn);
+
+    }
+    private void signIn() {
+        Intent i = googleSignInClient.getSignInIntent();
+        startActivityForResult(i, 100);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 100) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                task.getResult(ApiException.class);
+                HomeActivity();
+            } catch (ApiException e) {
+                Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                throw new RuntimeException(e);
+            }
+
+        }
+    }
+
+    private void HomeActivity() {
+        finish();
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
     }
 
     @Override
@@ -64,4 +119,5 @@ public class Login extends AppCompatActivity {
         super.onBackPressed();
         startActivity(new Intent(Login.this, StartActivity.class));
     }
+
 }
