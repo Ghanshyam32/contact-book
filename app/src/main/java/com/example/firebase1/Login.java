@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -58,15 +60,25 @@ public class Login extends AppCompatActivity {
 
             private void loginUser(String txt_email, String txt_password) {
 
-                firebaseAuth.signInWithEmailAndPassword(txt_email, txt_password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        Toast.makeText(Login.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Login.this, MainActivity.class));
-                        finish();
-                    }
-                });
-
+                if (TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)) {
+                    Toast.makeText(Login.this, "Email or password cannot be empty", Toast.LENGTH_SHORT).show();
+                } else {
+                    firebaseAuth.signInWithEmailAndPassword(txt_email, txt_password)
+                            .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                @Override
+                                public void onSuccess(AuthResult authResult) {
+                                    Toast.makeText(Login.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(Login.this, MainActivity.class));
+                                    finish();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(Exception e) {
+                                    Toast.makeText(Login.this, "Login failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
             }
         });
 
@@ -88,10 +100,12 @@ public class Login extends AppCompatActivity {
         googleSignInClient = GoogleSignIn.getClient(this, googleSignIn);
 
     }
+
     private void signIn() {
         Intent i = googleSignInClient.getSignInIntent();
         startActivityForResult(i, 100);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -112,12 +126,14 @@ public class Login extends AppCompatActivity {
     private void HomeActivity() {
         finish();
         Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(i);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(Login.this, StartActivity.class));
+        finish();
     }
 
 }

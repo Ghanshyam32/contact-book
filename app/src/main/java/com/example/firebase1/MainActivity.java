@@ -16,6 +16,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
@@ -40,52 +41,41 @@ public class MainActivity extends AppCompatActivity {
         add = findViewById(R.id.add);
         show = findViewById(R.id.show);
 
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Toast.makeText(MainActivity.this, "Logging You out..", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(MainActivity.this, StartActivity.class));
+        logout.setOnClickListener(v -> {
+            FirebaseAuth.getInstance().signOut();
+            Toast.makeText(MainActivity.this, "Logging You out..", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(MainActivity.this, StartActivity.class));
+            finish();
+        });
+
+        show.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ContactsList.class)));
+
+        add.setOnClickListener(v -> {
+            String txt_name = name.getText().toString();
+            String txt_number = number.getText().toString();
+
+            if (TextUtils.isEmpty(txt_name) || TextUtils.isEmpty(txt_number)) {
+                Toast.makeText(MainActivity.this, "No details Entered!", Toast.LENGTH_SHORT).show();
+            } else {
+
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("name", txt_name);
+                map.put("number", txt_number);
+                Toast.makeText(MainActivity.this, "Contact Saved", Toast.LENGTH_SHORT).show();
+
+                FirebaseDatabase.getInstance().getReference().child("Ghanshyam").push().setValue(map);
             }
         });
 
-        show.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ContactsList.class));
-            }
-        });
-
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String txt_name = name.getText().toString();
-                String txt_number = number.getText().toString();
-
-                if (TextUtils.isEmpty(txt_name) || TextUtils.isEmpty(txt_number)) {
-                    Toast.makeText(MainActivity.this, "No details Entered!", Toast.LENGTH_SHORT).show();
-                } else {
-
-                    HashMap<String, Object> map = new HashMap<>();
-                    map.put("name", txt_name);
-                    map.put("number", txt_number);
-                    Toast.makeText(MainActivity.this, "Contact Saved", Toast.LENGTH_SHORT).show();
-
-                    FirebaseDatabase.getInstance().getReference().child("Ghanshyam").push().setValue(map);
-//                    FirebaseDatabase.getInstance().getReference().child("Ghanshyam Mishra").child("Multiple").up(map);
-//                    FirebaseDatabase.getInstance().getReference().child("Ghanshyam").push().child("Number").setValue(txt_number);
-
-                }
-            }
-        });
-
-
-//        FirebaseDatabase.getInstance().getReference().child("Ghanshyam Mishra").child("Android").setValue("Moto G5s Plus");
-//
-//        HashMap<String, Object> map = new HashMap<>();
-//        map.put("Name", txt_);
-//        map.put("Email", "ghanshyammishra3205615@gmail.com");
-//
-//        FirebaseDatabase.getInstance().getReference().child("Ghanshyam Mishra").child("Multiple").updateChildren(map);
     }
+
+    @Override
+    public void onBackPressed() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null) {
+            super.onBackPressed(); // Close the app
+        } else {
+            Toast.makeText(this, "Please log out before exiting the app", Toast.LENGTH_SHORT).show();
+        }
     }
+}

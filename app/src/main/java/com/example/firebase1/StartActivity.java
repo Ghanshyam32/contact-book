@@ -30,40 +30,32 @@ public class StartActivity extends AppCompatActivity {
 
         LinearLayout register = findViewById(R.id.newUser);
         LinearLayout login = findViewById(R.id.oldUser);
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(StartActivity.this, Register.class));
-                finish();
-            }
-        });
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(StartActivity.this, Login.class));
-                finish();
-            }
-        });
 
-        boolean userLoggedIn = FirebaseAuth.getInstance().getCurrentUser() != null;
-        if (userLoggedIn) {
-            startActivity(new Intent(StartActivity.this, MainActivity.class));
-        } else {
-            register.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(StartActivity.this, Register.class));
-                }
-            });
-
-            login.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(StartActivity.this, Login.class));
-                }
-            });
-
-
+        // Check if the user is already logged in
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            startMainActivity();
         }
+
+        // Set click listeners for registration and login
+        findViewById(R.id.newUser).setOnClickListener(v -> startRegisterActivity());
+        findViewById(R.id.oldUser).setOnClickListener(v -> startLoginActivity());
+    }
+
+    private void startRegisterActivity() {
+        Intent intent = new Intent(StartActivity.this, Register.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void startLoginActivity() {
+        Intent intent = new Intent(StartActivity.this, Login.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void startMainActivity() {
+        Intent intent = new Intent(StartActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

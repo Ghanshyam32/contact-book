@@ -68,18 +68,6 @@ public class mobileSignIn extends AppCompatActivity {
                     Toast.makeText(mobileSignIn.this, "Enter Mobile Number", Toast.LENGTH_SHORT).show();
                 }
 
-//                String number = numberCol.getText().toString();
-//                if(number.length()<10 && number.length()>1){
-//                    Toast.makeText(mobileSignIn.this, "please enter correct number", Toast.LENGTH_SHORT).show();
-//                }
-//                else if(number.length()==10) {
-//                    Intent intent = new Intent(mobileSignIn.this, otpVerification.class);
-//                    intent.putExtra("mobile", number);
-//                    finish();
-//                }
-//                else{
-//                    Toast.makeText(mobileSignIn.this, "Enter 10 Digit Number", Toast.LENGTH_SHORT).show();
-//                }
             }
         });
     }
@@ -87,7 +75,7 @@ public class mobileSignIn extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(mobileSignIn.this, StartActivity.class);
+        Intent intent = new Intent(mobileSignIn.this, Login.class);
         startActivity(intent);
     }
 }

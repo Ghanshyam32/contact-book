@@ -10,9 +10,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,6 +39,7 @@ public class Register extends AppCompatActivity {
         password = findViewById(R.id.signUp_password);
         firebaseAuth = FirebaseAuth.getInstance();
 
+
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,18 +57,23 @@ public class Register extends AppCompatActivity {
 
             private void registerUser(String txt_email, String txt_password) {
 
-                firebaseAuth.createUserWithEmailAndPassword(txt_email, txt_password).addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(Register.this, "Register Successful", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Register.this, MainActivity.class));
-                            finish();
-                        } else {
-                            Toast.makeText(Register.this, "Registration failed", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                firebaseAuth.createUserWithEmailAndPassword(txt_email, txt_password)
+                        .addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(Register.this, "Register Successful", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(Register.this, MainActivity.class));
+                                    finish();
+                                }
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(Exception e) {
+                                Toast.makeText(Register.this, "Login failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
             }
         });
@@ -78,5 +86,6 @@ public class Register extends AppCompatActivity {
         super.onBackPressed();
         Intent intent = new Intent(Register.this, StartActivity.class);
         startActivity(intent);
+        finish();
     }
 }

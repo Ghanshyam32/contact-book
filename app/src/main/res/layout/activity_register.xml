@@ -7,7 +7,7 @@
     android:layout_gravity="center"
     android:background="@color/black"
     android:orientation="vertical"
-    tools:context=".Login">
+    tools:context=".Register">
 
     <TextView
         android:layout_width="wrap_content"
@@ -50,6 +50,7 @@
             android:hint="Email"
             android:inputType="textEmailAddress"
             android:maxLines="1"
+            android:textColor="@color/white"
             android:textColorHint="#757474"
             android:textSize="15sp" />
 
@@ -74,12 +75,11 @@
             android:hint="Password"
             android:inputType="textPassword"
             android:maxLines="1"
+            android:textColor="@color/white"
             android:textColorHint="#757474"
             android:textSize="15sp" />
 
     </LinearLayout>
-
-
 
 
     <LinearLayout
@@ -111,32 +111,20 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="60dp"
         android:fontFamily="@font/archivo_semibold"
-        android:text="-------------- or log in with ---------------"
+        android:text="already have an account?"
         android:textColor="#656464"
         android:textStyle="bold" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/gLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
+        android:gravity="center"
+        android:text="Login"
+        android:textColor="#E35124"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
-        >
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/fb_icon" />
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="20dp"
-            android:src="@drawable/google_icon" />
-
-
-    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
