@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
@@ -57,15 +58,26 @@ public class MainActivity extends AppCompatActivity {
             if (TextUtils.isEmpty(txt_name) || TextUtils.isEmpty(txt_number)) {
                 Toast.makeText(MainActivity.this, "No details Entered!", Toast.LENGTH_SHORT).show();
             } else {
+                // Get the current user's UID
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                if (currentUser != null) {
+                    String uid = currentUser.getUid();
 
-                HashMap<String, Object> map = new HashMap<>();
-                map.put("name", txt_name);
-                map.put("number", txt_number);
-                Toast.makeText(MainActivity.this, "Contact Saved", Toast.LENGTH_SHORT).show();
+                    // Set up a reference to the user's contacts node in the database
+                    DatabaseReference userContactsRef = FirebaseDatabase.getInstance().getReference("users").child(uid).child("contacts");
 
-                FirebaseDatabase.getInstance().getReference().child("Ghanshyam").push().setValue(map);
+                    // Save a new contact
+                    String contactId = userContactsRef.push().getKey();
+                    HashMap<String, Object> map = new HashMap<>();
+                    map.put("name", txt_name);
+                    map.put("number", txt_number);
+                    userContactsRef.child(contactId).setValue(map);
+
+                    Toast.makeText(MainActivity.this, "Contact Saved", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
 
     }
 

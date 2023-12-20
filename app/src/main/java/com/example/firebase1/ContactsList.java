@@ -13,6 +13,8 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,61 +27,46 @@ public class ContactsList extends AppCompatActivity {
 
     RecyclerView recyclerView;
     myAdapter myAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_list);
 
-
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-//        final ArrayList<String> list = new ArrayList<>();
-//        final ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.list_item, list);
-//        contactsList.setAdapter(adapter);
+        // Get the current user's UID
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            String uid = currentUser.getUid();
 
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Ghanshyam");
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                list.clear();
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-////                    ModelClass modelClass =  snapshot.getValue(ModelClass.class);
-////                    assert modelClass != null;
-////                    String txt = modelClass.getNumber() + " : " + modelClass.getName();
-//                    list.add(snapshot.getValue().toString());
-//                }
-//                adapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
+            // Set up the query to fetch data from the user's "contacts" node
+            DatabaseReference contactsRef = FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("contacts");
+            FirebaseRecyclerOptions<modelClass> options =
+                    new FirebaseRecyclerOptions.Builder<modelClass>()
+                            .setQuery(contactsRef, modelClass.class)
+                            .build();
 
-
-        FirebaseRecyclerOptions<modelClass> options =
-                new FirebaseRecyclerOptions.Builder<modelClass>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("Ghanshyam"), modelClass.class)
-                        .build();
-
-        myAdapter = new myAdapter(options);
-        recyclerView.setAdapter(myAdapter);
+            myAdapter = new myAdapter(options);
+            recyclerView.setAdapter(myAdapter);
+        }
     }
+
     @Override
     protected void onStart() {
         super.onStart();
         myAdapter.startListening();
     }
+
     @Override
     protected void onStop() {
         super.onStop();
-        myAdapter.startListening();
+        myAdapter.stopListening();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.searchmenu, menu);
 
         MenuItem item = menu.findItem(R.id.search);
@@ -92,7 +79,6 @@ public class ContactsList extends AppCompatActivity {
                 return false;
             }
 
-
             @Override
             public boolean onQueryTextChange(String s) {
                 processSearch(s);
@@ -103,15 +89,21 @@ public class ContactsList extends AppCompatActivity {
     }
 
     private void processSearch(String s) {
-        FirebaseRecyclerOptions<modelClass> options =
-                new FirebaseRecyclerOptions.Builder<modelClass>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference()
-                                .child("Ghanshyam").orderByChild("name")
-                                .startAt(s).endAt(s + "\uf8ff"), modelClass.class)
-                        .build();
+        // Get the current user's UID
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            String uid = currentUser.getUid();
 
-        myAdapter = new myAdapter(options);
-        myAdapter.startListening();
-        recyclerView.setAdapter(myAdapter);
+            // Set up the query to fetch data from the user's "contacts" node
+            DatabaseReference contactsRef = FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("contacts");
+            FirebaseRecyclerOptions<modelClass> options =
+                    new FirebaseRecyclerOptions.Builder<modelClass>()
+                            .setQuery(contactsRef.orderByChild("name").startAt(s).endAt(s + "\uf8ff"), modelClass.class)
+                            .build();
+
+            myAdapter = new myAdapter(options);
+            myAdapter.startListening();
+            recyclerView.setAdapter(myAdapter);
+        }
     }
 }
