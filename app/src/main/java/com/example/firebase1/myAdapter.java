@@ -62,7 +62,7 @@ public class myAdapter extends FirebaseRecyclerAdapter<modelClass, myAdapter.myV
                         map.put("number", number.getText().toString());
 
                         FirebaseDatabase.getInstance().getReference().child("Ghanshyam")
-                                .child(getRef(position).getKey()).updateChildren(map)
+                                .child(getRef(holder.getPosition()).getKey()).updateChildren(map)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
@@ -91,7 +91,7 @@ public class myAdapter extends FirebaseRecyclerAdapter<modelClass, myAdapter.myV
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         FirebaseDatabase.getInstance().getReference().child("Ghanshyam")
-                                .child(getRef(position).getKey()).removeValue();
+                                .child(getRef(holder.getPosition()).getKey()).removeValue();
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
